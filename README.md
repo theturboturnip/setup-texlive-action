@@ -27,7 +27,7 @@ This action provides a smooth way to setup a TeX Live distribution tailored to y
 * same customization level of a local installation,
 * compatible with Ubuntu, macOS and Windows runners.
 
-Based on [paolobrasolin's work](https://github.com/paolobrasolin/setup-texlive-action/commit/04ddc71e652c8a892d232b26d55fe8eb02551687) which was seemingly abandoned
+Based on [paolobrasolin's work](https://github.com/paolobrasolin/setup-texlive-action/tree/04ddc71e652c8a892d232b26d55fe8eb02551687) which was seemingly abandoned.
 
 # Getting started
 
@@ -84,11 +84,31 @@ jobs:
 You just compiled `sample2e` in your CI!
 The world is your oyster.
 
+> [!WARNING]
+> By default, this action uses the CTAN mirror and therefore the latest TeXLive version, whatever it is.
+> The TeXLive environment is cached by default, which may cause problems or unexpected results whenever
+> a new TeXLive version is released.
+> If consistency is required, set `repository` to a historical mirror for a fixed TeXLive version - see below.
+
 # Usage
 
 Here is a full rundown of options for advanced usage.
 
 ## Inputs
+
+### `repository`
+
+* Optional
+* Default: the CTAN standard repository, providing the most recent TeXLive version
+
+This option selects the TeXLive repository. It must not have trailing slash.
+
+Defaults to the CTAN mirror, which provides the most recent TeXLive version.
+
+For historic versions, see <https://tug.org/historic/> for a list of mirrors,
+choose a version from the `systems/texlive` folder,
+and copy the path to the `tlnet` or `tlnet-final` folder, e.g. <https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2024/tlnet-final>.
+This folder should already contain `install-tl-unx.tar.gz` and `install-tl.zip`.
 
 ### `profile-path`
 

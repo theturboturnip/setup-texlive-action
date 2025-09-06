@@ -1,22 +1,22 @@
-name: ubuntu
+name: windows-most-recent
 on:
   push:
   schedule:
     - cron: "0 0 * * *"
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Generate timestamp for weekly cache invalidation
         id: current-time
-        run: echo "formattedTime=$(date +%Y-%V)" >> $GITHUB_OUTPUT
+        run: Write-Output "formattedTime=$(Get-Date -UFormat %Y-%V)" >> $Env:GITHUB_OUTPUT
       - name: Setup TeX Live
         uses: ./
         with:
-          version: 2022
-          cache-key: texlive-ubuntu-latest-${{ steps.current-time.outputs.formattedTime }}
+          # leave `repository` unset to get the latest
+          cache-key: texlive-windows-latest-${{ steps.current-time.outputs.formattedTime }}
           packages-path: ${{ github.workspace }}/.github/texlive.packages
           profile-path: ${{ github.workspace }}/.github/texlive.profile
       - name: Test tlmgr availability

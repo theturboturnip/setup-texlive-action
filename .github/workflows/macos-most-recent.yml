@@ -1,4 +1,4 @@
-name: macos
+name: macos-most-recent
 on:
   push:
   schedule:
@@ -15,7 +15,7 @@ jobs:
       - name: Setup TeX Live
         uses: ./
         with:
-          version: 2022
+          # leave `repository` unset to get the latest
           cache-key: texlive-macos-latest-${{ steps.current-time.outputs.formattedTime }}
           packages-path: ${{ github.workspace }}/.github/texlive.packages
           profile-path: ${{ github.workspace }}/.github/texlive.profile
