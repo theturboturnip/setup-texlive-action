@@ -1,6 +1,6 @@
 name: Setup TeX Live
 author: |
-  Samuel Stark
+  Samuel W. Stark (@theturboturnip)
   Paolo Brasolin <paolo.brasolin@gmail.com>
 description: GHA action to setup TeX Live
 branding:

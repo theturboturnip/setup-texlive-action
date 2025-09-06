@@ -7,13 +7,13 @@
 [![Latest release badge][release-shield]][release-url]
 [![License badge][license-shield]][license-url]
 
-[ubuntu-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/ubuntu.yml "Ubuntu CI tests"
-[macos-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/macos.yml "macOS CI tests"
-[windows-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/windows.yml "Windows CI tests"
+[ubuntu-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/ubuntu-most-recent.yml "Ubuntu CI tests"
+[macos-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/macos-most-recent.yml "macOS CI tests"
+[windows-ci-url]: https://github.com/theturboturnip/setup-texlive-action/actions/workflows/windows-most-recent.yml "Windows CI tests"
 
-[ubuntu-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/ubuntu.yml?branch=main&label=Ubuntu&logo=ubuntu&logoColor=white
-[macos-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/macos.yml?branch=main&label=macOS&logo=apple&logoColor=white
-[windows-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/windows.yml?branch=main&label=Windows&logo=windows&logoColor=white
+[ubuntu-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/ubuntu-most-recent.yml?branch=main&label=Ubuntu&logo=ubuntu&logoColor=white
+[macos-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/macos-most-recent.yml?branch=main&label=macOS&logo=apple&logoColor=white
+[windows-ci-shield]: https://img.shields.io/github/actions/workflow/status/theturboturnip/setup-texlive-action/windows-most-recent.yml?branch=main&label=Windows&logo=windows&logoColor=white
 
 [release-url]: https://github.com/theturboturnip/setup-texlive-action/releases "Latest release"
 [license-url]: https://github.com/theturboturnip/setup-texlive-action/blob/main/LICENSE "License"
@@ -28,6 +28,12 @@ This action provides a smooth way to setup a TeX Live distribution tailored to y
 * compatible with Ubuntu, macOS and Windows runners.
 
 Based on [paolobrasolin's work](https://github.com/paolobrasolin/setup-texlive-action/tree/04ddc71e652c8a892d232b26d55fe8eb02551687) which was seemingly abandoned.
+
+> [!WARNING]
+> By default, this action uses the CTAN mirror and therefore the latest TeXLive version, whatever it is.
+> The TeXLive environment is cached by default, which may cause problems or unexpected results whenever
+> a new TeXLive version is released.
+> If consistency is required, set `repository` to a historical mirror for a fixed TeXLive version - see below.
 
 # Getting started
 
@@ -83,12 +89,6 @@ jobs:
 
 You just compiled `sample2e` in your CI!
 The world is your oyster.
-
-> [!WARNING]
-> By default, this action uses the CTAN mirror and therefore the latest TeXLive version, whatever it is.
-> The TeXLive environment is cached by default, which may cause problems or unexpected results whenever
-> a new TeXLive version is released.
-> If consistency is required, set `repository` to a historical mirror for a fixed TeXLive version - see below.
 
 # Usage
 
