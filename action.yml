@@ -1,10 +1,19 @@
 name: Setup TeX Live
-author: Paolo Brasolin <paolo.brasolin@gmail.com>
+author: |
+  Samuel Stark
+  Paolo Brasolin <paolo.brasolin@gmail.com>
 description: GHA action to setup TeX Live
 branding:
   icon: book-open
   color: blue
 inputs:
+  version:
+    description: TeXLive version. Only compatible with 2019+, not compatible with current year.
+    required: true
+  mirror:
+    description: TeXLive historic archive mirror. See https://tug.org/historic/ for a list of mirrors. Defaults to the US University of Utah mirror.
+    required: false
+    default: https://ftp.math.utah.edu/pub/tex/historic/
   profile-path:
     description: File path of a tlmgr profile. The default is a `scheme-infraonly` with no documentation or source files. You use it as a starting point, see https://github.com/theturboturnip/setup-texlive-action/blob/main/texlive.profile
     required: false
@@ -18,7 +27,7 @@ inputs:
     required: false
     default: 'texlive'
   cache-enabled:
-    description: Option to disable caching. Default is `false`.
+    description: Option to enable caching. Default is `true`.
     required: false
     default: true
   installation-path:
@@ -36,7 +45,7 @@ runs:
       if: inputs.cache-enabled == 'true'
       with:
         path: ${{ inputs.installation-path }}
-        key: ${{ inputs.cache-key }}-${{ hashFiles(inputs.profile-path, inputs.packages-path) }}
+        key: ${{ inputs.cache-key }}-${{ hashFiles(inputs.profile-path, inputs.packages-path) }}-${{ inputs.version }}-${{ inputs.mirror }}
         restore-keys: ${{ inputs.cache-key }}-
 
     - name: Install TeX Live distribution (Windows)
@@ -50,13 +59,13 @@ runs:
         ## Check into temporary folder
         Set-Location -Path ${{ runner.temp }}
         ## Download installer
-        Invoke-WebRequest http://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip -OutFile install-tl.zip
+        Invoke-WebRequest ${{ inputs.mirror }}/systems/texlive/${{ inputs.year }}/install-tl.zip -OutFile install-tl.zip
         ## Unpack installer
         Expand-Archive -Path install-tl.zip -DestinationPath .
         ## Check into unpacked installer folder
         Set-Location -Path install-tl-20*
         ## Run installer with given profile
-        .\install-tl-windows.bat --portable --profile="${env:TEXLIVE_PROFILE_PATH}"
+        .\install-tl-windows.bat --portable --profile="${env:TEXLIVE_PROFILE_PATH}" -repository ${{ inputs.mirror }}/systems/texlive/${{ inputs.year }}/tlnet-final
     - name: Install TeX Live distribution (Linux or macOS)
       if: runner.os != 'Windows' && steps.cache-texlive.outputs.cache-hit != 'true'
       env:
@@ -68,13 +77,13 @@ runs:
         ## Check into temporary folder
         cd ${{ runner.temp }}
         ## Download installer
-        wget --quiet http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+        wget --quiet ${{ inputs.mirror }}/systems/texlive/${{ inputs.year }}/install-tl-unx.tar.gz
         ## Unpack installer
         tar -xzf install-tl-unx.tar.gz
         ## Check into unpacked installer folder
         cd install-tl-20*
         ## Run installer with given profile
-        ./install-tl --portable --profile="$TEXLIVE_PROFILE_PATH"
+        ./install-tl --portable --profile="$TEXLIVE_PROFILE_PATH" -repository ${{ inputs.mirror }}/systems/texlive/${{ inputs.year }}/tlnet-final
 
     - name: Update system paths (Windows)
       if: runner.os == 'Windows'
