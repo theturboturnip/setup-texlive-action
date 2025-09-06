@@ -6,7 +6,7 @@ branding:
   color: blue
 inputs:
   profile-path:
-    description: File path of a tlmgr profile. The default is a `scheme-infraonly` with no documentation or source files. You use it as a starting point, see https://github.com/paolobrasolin/setup-texlive-action/blob/main/texlive.profile
+    description: File path of a tlmgr profile. The default is a `scheme-infraonly` with no documentation or source files. You use it as a starting point, see https://github.com/theturboturnip/setup-texlive-action/blob/main/texlive.profile
     required: false
     default: ${{ github.action_path }}${{ runner.os == 'Windows' && '\' || '/'}}texlive.profile 
   packages-path:
