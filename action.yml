@@ -54,7 +54,6 @@ runs:
       with:
         path: ${{ inputs.installation-path }}
         key: ${{ inputs.cache-key }}-${{ hashFiles(inputs.profile-path, inputs.packages-path) }}-${{ inputs.repository }}
-        restore-keys: ${{ inputs.cache-key }}-
 
     - name: Install TeX Live distribution (Windows)
       if: runner.os == 'Windows' && steps.cache-texlive.outputs.cache-hit != 'true'
