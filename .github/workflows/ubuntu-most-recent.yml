@@ -2,16 +2,16 @@ name: ubuntu-most-recent
 on:
   push:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 1/10 * *"
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Generate timestamp for weekly cache invalidation
+      - name: Generate timestamp for monthly cache invalidation
         id: current-time
-        run: echo "formattedTime=$(date +%Y-%V)" >> $GITHUB_OUTPUT
+        run: echo "formattedTime=$(date +%Y-%m)" >> $GITHUB_OUTPUT
       - name: Setup TeX Live
         uses: ./
         with:

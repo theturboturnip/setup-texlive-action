@@ -2,16 +2,16 @@ name: windows-most-recent
 on:
   push:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 1/10 * *"
 jobs:
   main:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Generate timestamp for weekly cache invalidation
+      - name: Generate timestamp for monthly cache invalidation
         id: current-time
-        run: Write-Output "formattedTime=$(Get-Date -UFormat %Y-%V)" >> $Env:GITHUB_OUTPUT
+        run: Write-Output "formattedTime=$(Get-Date -UFormat %Y-%m)" >> $Env:GITHUB_OUTPUT
       - name: Setup TeX Live
         uses: ./
         with:
