@@ -29,6 +29,12 @@ This action provides a smooth way to setup a TeX Live distribution tailored to y
 
 Based on [paolobrasolin's work](https://github.com/paolobrasolin/setup-texlive-action/tree/04ddc71e652c8a892d232b26d55fe8eb02551687) which was seemingly abandoned.
 
+> [!NOTE]
+> This action tries to cache the TeXLive output to avoid hammering the mirrors, but [GitHub Action cache sharing rules are odd.](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching#restrictions-for-accessing-a-cache)
+> Make sure that whatever Action is using TeXLive is activated on a branch, not a tag.
+> If it is activated on a non-main branch, it will be able to read the cache for itself and the main branch, but it won't be able to read sibling branches.
+> If it is activated on a tag, it may not be able to retrieve any caches from any other runs except for that tag.
+
 > [!WARNING]
 > By default, this action uses the CTAN mirror and therefore the latest TeXLive version, whatever it is.
 > The TeXLive environment is cached by default, which may cause problems or unexpected results whenever
